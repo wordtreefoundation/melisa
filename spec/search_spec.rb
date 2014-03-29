@@ -2,7 +2,7 @@ require_relative 'spec_helper'
 
 describe Melisa::Search do 
   let(:keys) { ['one', 'two', 'onetwo'] }
-  let(:trie) { Melisa::BaseTrie.new(keys) }
+  let(:trie) { Melisa::Trie.new(keys) }
   
   it "iterates with each" do
     arr = []

@@ -1,64 +1,105 @@
-module Melisa
-  class Trie
-    attr_reader :trie, :keyset
+require "melisa/base_config_flags"
+require "melisa/search"
 
-    def initialize
+module Melisa
+  ImmutableError = Class.new(StandardError)
+
+  class Trie
+    include Enumerable
+
+    attr_reader :trie
+
+    # Initialize a BaseTrie.
+    # @keys    An array of UTF-8 strings
+    # @weights An array of corresponding weights
+    # @opts
+    #   :binary      Boolean, true for a binary Trie, false for text
+    #   :num_tries   An integer from 1 to 127 representing the depth of recursive Tries
+    #   :cache_size  One of [:tiny, :small, :normal, :large, :huge]
+    #   :order       One of [:label, :weight]
+    def initialize(keys=[], weights=[], opts={})
       @trie = Marisa::Trie.new
       @keyset = Marisa::Keyset.new
-      @agent = Marisa::Agent.new
-
+      @options = opts
       @built = false
+
+      add_many(keys, weights)
     end
 
-    def add(term, weight=nil)
-      raise_if_built("add")
-      if weight
-        @keyset.push_back(term, weight)
-      else
-        @keyset.push_back(term)
+    def build
+      @trie.build(@keyset, config_flags(@options)) unless @built
+      @built = true
+    end
+
+    def add(key, weight=nil)
+      raise ImmutableError, "Can't add #{key}, Trie already built" if @built
+      self.tap { push(key, weight) }
+    end
+    alias :<< :add
+
+    def add_many(keys, weights)
+      for key, weight in keys.zip(weights)
+        push(key, weight)
       end
-      term
+    end
+
+    def search(prefix)
+      build unless @built
+      Search.new(self, prefix)
+    end
+
+    def each(&block)
+      build unless @built
+      search('').each(&block)
     end
 
     def size
-      @keyset.size
+      build unless @built
+      @trie.num_keys()
     end
 
-    def [](key)
-      build_if_necessary
-      @agent.set_query(key)
-      if @trie.lookup(@agent)
-        # require 'debugger'; debugger
-        return @agent.key.weight
-      else
-        return false
-      end
+    def keys
+      build unless @built
+      search('').keys
     end
 
-    def prefixes_of(search_term, &block)
-      build_if_necessary
+    def has_keys?
+      build unless @built
+      search('').has_keys?
+    end
 
-      @agent.set_query(search_term)
+    def include?(key)
+      build unless @built
+      a = Marisa::Agent.new
+      a.set_query(key)
+      @trie.lookup(a)
+    end
 
-      while @trie.common_prefix_search(@agent)
-        key = @agent.key
-        block.call(key.str, key.weight)
-      end
+    def read(file_handle)
+      self.tap { @trie.read(file_handle.fileno); @built = true }
+    end
+
+    def write(file_handle)
+      self.tap { @trie.write(file_handle.fileno) }
+    end
+
+    def load(path)
+      self.tap { File.open(path, "r") { |file| read(file) } }
+    end
+
+    def save(path)
+      self.tap { File.open(path, "w") { |file| write(file) } }
     end
 
   protected
+    include BaseConfigFlags
 
-    def built?
-      @built
-    end
-
-    def raise_if_built(verb="do that")
-      return unless built?
-      raise ImmutableError, "can't #{verb}, Trie is already built and therefore immutable"
-    end
-
-    def build_if_necessary
-      @trie.build(@keyset) if not built?
+    def push(key, weight)
+      if weight
+        @keyset.push_back(key, weight)
+      else
+        @keyset.push_back(key)
+      end
     end
   end
 end

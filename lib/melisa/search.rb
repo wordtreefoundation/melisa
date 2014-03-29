@@ -38,5 +38,12 @@ module Melisa
       reset_agent
       return @trie.trie.predictive_search(@agent)
     end
+
+    def with_prefixes(&block)
+      reset_agent
+      while @trie.trie.common_prefix_search(@agent)
+        block.call(@agent.key_str)
+      end
+    end
   end
 end

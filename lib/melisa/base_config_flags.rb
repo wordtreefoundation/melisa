@@ -1,4 +1,6 @@
 module Melisa
+  ConfigError = Class.new(StandardError)
+
   CacheSizes = {
     :huge    => Marisa::HUGE_CACHE,
     :large   => Marisa::LARGE_CACHE,
