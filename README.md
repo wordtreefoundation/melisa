@@ -1,6 +1,11 @@
-Status:
- - some basic Trie search working
+Features
+--------
+ - fast search for exact strings and prefixes
+ - has a BytesTrie that can be used to store binary data
+ - has an IntTrie that can be used to store integer values easily
+
+TODO
+----
  - Ruby bindings aren't yet built into the gem
- - Tries with integer or other values not yet implemented
 
 License: MIT
