@@ -73,20 +73,13 @@ module Melisa
       search('').include?(key)
     end
 
-    def read(file_handle)
-      self.tap { @trie.read(file_handle.fileno); @built = true }
-    end
-
-    def write(file_handle)
-      self.tap { @trie.write(file_handle.fileno) }
-    end
-
     def load(path)
-      self.tap { File.open(path, "r") { |file| read(file) } }
+      self.tap { @trie.load(path); @built = true }
     end
 
     def save(path)
-      self.tap { File.open(path, "w") { |file| write(file) } }
+      build unless @built
+      self.tap { @trie.save(path) }
     end
 
   protected

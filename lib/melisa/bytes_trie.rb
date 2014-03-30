@@ -2,7 +2,7 @@ module Melisa
   VALUE_SEPARATOR = "\xff"
 
   class BytesTrie < Trie
-    def initialize(hash, separator=VALUE_SEPARATOR, opts={})
+    def initialize(hash={}, separator=VALUE_SEPARATOR, opts={})
       super([], [], opts)
 
       @sep = separator

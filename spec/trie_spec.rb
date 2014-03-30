@@ -1,4 +1,5 @@
 require_relative "spec_helper"
+require 'tempfile'
 
 describe Melisa::Trie do
   let(:terms) { ['one', 'two', 'onetwo'] }
@@ -15,5 +16,15 @@ describe Melisa::Trie do
 
   it "lists keys" do
     trie.keys.should =~ ['one', 'two', 'onetwo']
+  end
+
+  it "saves" do
+    tmp = Tempfile.new('melisa')
+    trie.save(tmp.path)
+
+    trie2 = Melisa::Trie.new
+    trie2.load(tmp.path)
+
+    trie2.keys.should =~ ['one', 'two', 'onetwo']
   end
 end

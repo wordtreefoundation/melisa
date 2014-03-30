@@ -16,8 +16,16 @@ Gem::Specification.new do |gem|
   gem.files += Dir.glob("lib/**/*.rb")
   gem.files += Dir.glob("spec/**/*")
 
+  # Configure marisa external C library
+  gem.files += Dir.glob("ext/**/*.h")
+  gem.files += Dir.glob("ext/**/*.cc")
+  gem.files += Dir.glob("ext/**/*.cxx")
+  gem.files += Dir.glob("ext/**/extconf.rb")
+  gem.platform = Gem::Platform::RUBY
+  gem.extensions = Dir['ext/**/extconf.rb']
+
   gem.test_files = Dir.glob("spec/**/*")
-  gem.require_paths = ["lib"]
+  gem.require_paths = ["lib", "ext"]
   gem.version = Melisa::VERSION
   gem.required_ruby_version = '>= 1.9.0'
 
