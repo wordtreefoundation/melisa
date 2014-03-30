@@ -70,9 +70,7 @@ module Melisa
 
     def include?(key)
       build unless @built
-      a = Marisa::Agent.new
-      a.set_query(key)
-      @trie.lookup(a)
+      search('').include?(key)
     end
 
     def read(file_handle)
@@ -94,7 +92,7 @@ module Melisa
   protected
     include BaseConfigFlags
 
-    def push(key, weight)
+    def push(key, weight=nil)
       if weight
         @keyset.push_back(key, weight)
       else

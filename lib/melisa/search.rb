@@ -39,6 +39,12 @@ module Melisa
       return @trie.trie.predictive_search(@agent)
     end
 
+    def include?(key)
+      a = Marisa::Agent.new
+      a.set_query(key)
+      @trie.trie.lookup(a)
+    end
+
     def with_prefixes(&block)
       reset_agent
       while @trie.trie.common_prefix_search(@agent)
