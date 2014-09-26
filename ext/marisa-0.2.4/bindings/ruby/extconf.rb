@@ -18,11 +18,12 @@ if `which make`.strip.empty?
 end
 
 MARISA_ROOT = File.join(File.dirname(__FILE__), '..', '..')
-PREFIX = File.expand_path('dest', MARISA_ROOT)
+PREFIX = File.join(File.expand_path(MARISA_ROOT), 'pkg')
 
 FileUtils.cd(MARISA_ROOT) do
   sys "./configure --prefix='#{PREFIX}'"
   sys "make install"
+  sys "make distclean"
 end
 
 $CFLAGS   << " -I#{File.join(PREFIX, 'include')}"
