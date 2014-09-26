@@ -10,7 +10,12 @@ describe Melisa::BytesTrie do
     trie['onetwo'].should == '3'
   end
 
+  it "sets and gets values" do
+    trie['five'] = "5"
+    expect(trie['five']).to eq "5"
+  end
+
   it "retreives many values by prefix" do
-    trie.get_all('one').should =~ ['1', '3']
+    expect(trie.get_all('one')).to match_array ['1', '3']
   end
 end

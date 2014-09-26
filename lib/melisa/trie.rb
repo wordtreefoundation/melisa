@@ -31,12 +31,13 @@ module Melisa
       @built = true
     end
 
+    # Note: weight is not the same thing as a value! use a BytesTrie
+    # or IntTrie subclass if you want a key/value dictionary
     def add(key, weight=nil)
       raise ImmutableError, "Can't add #{key}, Trie already built" if @built
       self.tap { push(key, weight) }
     end
     alias :<< :add
-    alias :[]= :add
 
     def add_many(keys, weights)
       for key, weight in keys.zip(weights)

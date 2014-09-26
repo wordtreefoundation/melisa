@@ -31,6 +31,11 @@ module Melisa
     end
     alias :[] :get
 
+    def set(key, value)
+      add(raw_key(key, value))
+    end
+    alias :[]= :set
+
     # Search for many results with a given prefix
     def get_all(key)
       build unless @built

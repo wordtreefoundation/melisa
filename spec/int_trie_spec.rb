@@ -10,6 +10,11 @@ describe Melisa::IntTrie do
     trie['onetwo'].should == 3
   end
 
+  it "sets and gets values" do
+    trie['five'] = 5
+    expect(trie['five']).to eq 5
+  end
+
   it "retreives many values by prefix" do
     trie.get_all('one').should =~ [1, 3]
   end
