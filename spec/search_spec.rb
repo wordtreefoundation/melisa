@@ -13,17 +13,16 @@ describe Melisa::Search do
   end
 
   it "implements enumerable methods" do
-    trie.all? { |k| k.include? 'o' }.should be_true
-    trie.any? { |k| k.include? 'z' }.should_not be_true
-    trie.map { |k| k.upcase }.should =~ ['ONE', 'TWO', 'ONETWO']
+    expect(trie.all? { |k| k.include? 'o' }).to be_truthy
+    expect(trie.any? { |k| k.include? 'z' }).to be_falsy
+    expect(trie.map { |k| k.upcase }).to match_array ['ONE', 'TWO', 'ONETWO']
   end
 
   it "narrows the search" do
     subset = trie.search('one')
-    subset.should be_a(Melisa::Search)
-    subset.size.should == 2
-    subset.keys.should =~ ['one', 'onetwo']
-    # subset.map { |k| k.upcase }.should =~ ['ONE', 'ONETWO']
+    expect(subset).to be_a(Melisa::Search)
+    expect(subset.size).to eq 2
+    expect(subset.keys).to match_array ['one', 'onetwo']
   end
 
 end

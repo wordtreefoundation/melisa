@@ -10,12 +10,12 @@ describe Melisa::Trie do
   end
 
   it "tests for inclusion" do
-    trie.include?('one').should be_true
-    trie.include?('three').should_not be_true
+    expect(trie).to include 'one'
+    expect(trie).to_not include 'three'
   end
 
   it "lists keys" do
-    trie.keys.should =~ ['one', 'two', 'onetwo']
+    expect(trie.keys).to match_array ['one', 'two', 'onetwo']
   end
 
   it "saves" do
@@ -25,6 +25,6 @@ describe Melisa::Trie do
     trie2 = Melisa::Trie.new
     trie2.load(tmp.path)
 
-    trie2.keys.should =~ ['one', 'two', 'onetwo']
+    expect(trie2.keys).to match_array ['one', 'two', 'onetwo']
   end
 end
