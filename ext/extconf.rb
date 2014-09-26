@@ -21,7 +21,6 @@ MARISA_ROOT = File.expand_path(File.join(File.dirname(__FILE__), "marisa-0.2.4")
 PREFIX = File.join(MARISA_ROOT, 'pkg')
 
 FileUtils.cd(MARISA_ROOT) do
-  puts "**DIR**:" + `pwd`
   sys "./configure --prefix='#{PREFIX}'"
   sys "make install"
   sys "make distclean"

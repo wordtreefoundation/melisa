@@ -36,6 +36,7 @@ module Melisa
       self.tap { push(key, weight) }
     end
     alias :<< :add
+    alias :[]= :add
 
     def add_many(keys, weights)
       for key, weight in keys.zip(weights)
