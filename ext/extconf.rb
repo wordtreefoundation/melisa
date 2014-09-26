@@ -17,8 +17,8 @@ if `which make`.strip.empty?
   exit(1)
 end
 
-MARISA_ROOT = File.join(File.dirname(__FILE__), '..', '..')
-PREFIX = File.join(File.expand_path(MARISA_ROOT), 'pkg')
+MARISA_ROOT = File.expand_path(File.join(File.dirname(__FILE__), "marisa-0.2.4"))
+PREFIX = File.join(MARISA_ROOT, 'pkg')
 
 FileUtils.cd(MARISA_ROOT) do
   sys "./configure --prefix='#{PREFIX}'"
