@@ -6,7 +6,7 @@ require 'melisa/version'
 Gem::Specification.new do |gem|
   gem.name = "melisa"
   gem.summary = "Melisa is a Rubyesque wrapper for the Marisa Trie C library"
-  gem.description = "While marisa-trie provides a ruby binding, it is not particularly rubyesque. Melisa fixes that."
+  gem.description = "Melisa installs the marisa-trie C library and makes a ruby class Melisa::Trie that is an easy interface."
   gem.homepage = "http://github.com/wordtreefoundation/melisa"
   gem.authors = ['Duane Johnson']
   gem.email = ['duane.johnson@gmail.com']
@@ -17,10 +17,9 @@ Gem::Specification.new do |gem|
   gem.files += Dir.glob("spec/**/*")
 
   # Configure marisa external C library
-  gem.files += Dir.glob("ext/**/*.h")
-  gem.files += Dir.glob("ext/**/*.cc")
-  gem.files += Dir.glob("ext/**/*.cxx")
-  gem.files += Dir.glob("ext/**/extconf.rb")
+  gem.files += Dir.glob("ext/*.h")
+  gem.files += Dir.glob("ext/*.cxx")
+  gem.files += Dir.glob("ext/marisa-*/**/*")
   gem.platform = Gem::Platform::RUBY
   gem.extensions = Dir['ext/**/extconf.rb']
 
