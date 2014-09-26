@@ -11,9 +11,9 @@ module Melisa
       add_many(hash, [])
     end
 
-    def add_many(hash, weights)
+    def add_many(hash, weight=nil)
       for key, value in hash
-        push(raw_key(key, value))
+        push(raw_key(key, value), weight)
       end
     end
 
@@ -22,8 +22,7 @@ module Melisa
     end
 
     def get(key)
-      build unless @built
-      agent = Marisa::Agent.new
+      build_if_necessary
       agent.set_query(key + @sep)
       if @trie.predictive_search(agent)
         agent_key_value(agent)
@@ -38,8 +37,7 @@ module Melisa
 
     # Search for many results with a given prefix
     def get_all(key)
-      build unless @built
-      agent = Marisa::Agent.new
+      build_if_necessary
       agent.set_query(key)
       [].tap do |results|
         while @trie.predictive_search(agent)

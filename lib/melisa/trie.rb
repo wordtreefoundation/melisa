@@ -26,9 +26,19 @@ module Melisa
       add_many(keys, weights)
     end
 
+    def agent
+      @agent ||= Marisa::Agent.new
+    end
+
     def build
-      @trie.build(@keyset, config_flags(@options)) unless @built
-      @built = true
+      @trie.build(@keyset, config_flags(@options))
+    end
+
+    def build_if_necessary
+      unless @built
+        build
+        @built = true
+      end
     end
 
     # Note: weight is not the same thing as a value! use a BytesTrie
@@ -45,33 +55,47 @@ module Melisa
       end
     end
 
+    def get_id(key)
+      build_if_necessary
+      agent.set_query(key)
+      trie.lookup(agent)
+      agent.key_id if agent.key_str
+    end
+
+    def get_key(id)
+      build_if_necessary
+      agent.set_query(id)
+      trie.reverse_lookup(agent)
+      agent.key_str
+    end
+
     def search(prefix)
-      build unless @built
+      build_if_necessary
       Search.new(self, prefix)
     end
 
     def each(&block)
-      build unless @built
+      build_if_necessary
       search('').each(&block)
     end
 
     def size
-      build unless @built
+      build_if_necessary
       @trie.num_keys()
     end
 
     def keys
-      build unless @built
+      build_if_necessary
       search('').keys
     end
 
     def has_keys?
-      build unless @built
+      build_if_necessary
       search('').has_keys?
     end
 
     def include?(key)
-      build unless @built
+      build_if_necessary
       search('').include?(key)
     end
 
@@ -80,7 +104,7 @@ module Melisa
     end
 
     def save(path)
-      build unless @built
+      build_if_necessary
       self.tap { @trie.save(path) }
     end
 
@@ -89,7 +113,7 @@ module Melisa
 
     def push(key, weight=nil)
       if weight
-        @keyset.push_back(key, weight)
+        @keyset.push_back(key) #, weight) # For now, ignore weight due to marisa C++ binding issue
       else
         @keyset.push_back(key)
       end
