@@ -10,7 +10,7 @@ if ARGV.size > 0 && available_commands.include?(ARGV.first.downcase)
 
   exec(marisa_command, *ARGV[1..-1])
 else
-  $stderr.puts "USAGE: marisa COMMAND [options]"
+  $stderr.puts "USAGE: melisa COMMAND [options]"
   $stderr.puts "Commands: #{available_commands}"
   $stderr.puts "See http://marisa-trie.googlecode.com/svn/trunk/docs/readme.en.html"
   exit -1
