@@ -18,4 +18,15 @@ describe Melisa::IntTrie do
   it "retreives many values by prefix" do
     trie.get_all('one').should =~ [1, 3]
   end
+
+  it "#each iterates yielding integer values" do
+    expect { |b| trie.each(&b) }.to \
+      yield_successive_args(['onetwo', 3], ['one', 1], ['two', 2])
+  end
+
+  it "#sum produces the total value of subtree" do
+    expect(trie.sum).to eq 6
+    expect(trie.sum('one')).to eq(4)
+    expect(trie.sum('two')).to eq(2)
+  end
 end

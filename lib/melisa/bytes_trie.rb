@@ -13,7 +13,7 @@ module Melisa
 
     def add_many(hash, weight=nil)
       for key, value in hash
-        push(raw_key(key, value), weight)
+        push(key_and_value_as_string(key, value), weight)
       end
     end
 
@@ -31,7 +31,7 @@ module Melisa
     alias :[] :get
 
     def set(key, value)
-      add(raw_key(key, value))
+      add(key_and_value_as_string(key, value))
     end
     alias :[]= :set
 
@@ -46,13 +46,35 @@ module Melisa
       end
     end
 
+    def each(&block)
+      search('').each do |str|
+        yield string_as_key_and_value(str)
+      end
+    end
+
   protected
-    def raw_key(key, value)
-      key + @sep + value
+
+    # Can be overridden by subclasses
+    def serialize_value(value)
+      value
+    end
+
+    # Can be overridden by subclasses
+    def unserialize_value(value)
+      value
+    end
+
+    def key_and_value_as_string(key, value)
+      key + @sep + serialize_value(value)
+    end
+
+    def string_as_key_and_value(str)
+      key, binary_value = str.split(@sep)
+      [key, unserialize_value(binary_value)]
     end
 
     def agent_key_value(agent)
-      agent.key_str.split(@sep)[1]
+      unserialize_value(agent.key_str.split(@sep).last)
     end
   end
 end

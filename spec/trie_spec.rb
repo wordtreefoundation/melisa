@@ -42,4 +42,20 @@ describe Melisa::Trie do
     expect(trie.get_key(2)).to eq 'onetwo'
     expect{ trie.get_key(3) }.to raise_error
   end
+
+  it "returns size before being built" do
+    expect(trie.size).to eq 3
+    expect(trie.built?).to be_falsy
+  end
+
+  it "returns size after built built" do
+    trie.build
+    expect(trie.built?).to be_truthy
+    expect(trie.size).to eq 3
+  end
+
+  it "#each iterates alphabetically and yields keys" do
+    expect { |b| trie.each(&b) }.to \
+      yield_successive_args('one', 'onetwo', 'two')
+  end
 end

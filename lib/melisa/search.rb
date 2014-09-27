@@ -19,8 +19,12 @@ module Melisa
 
     def each(&block)
       reset_agent
-      # Yield each key
-      yield @agent.key_str while @trie.trie.predictive_search(@agent)
+      if block_given?
+        # Yield each string in alphabetical order
+        yield @agent.key_str while @trie.trie.predictive_search(@agent)
+      else
+        to_enum(&block)
+      end
     end
 
     def size

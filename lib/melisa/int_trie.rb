@@ -1,14 +1,19 @@
 module Melisa
   class IntTrie < BytesTrie
-  protected
-    def raw_key(key, value)
-      key + @sep + [value.to_i].pack('i*')
+    def sum(prefix='')
+      search(prefix).each.inject(0) do |total,str|
+        total + unserialize_value(str.split(@sep).last)
+      end
     end
 
-    def agent_key_value(agent)
-      if value = agent.key_str.split(@sep)[1]
-        value.unpack('i*').first
-      end
+  protected
+    # Serialize as big-endian (network ordered) Integer value
+    def serialize_value(value)
+      [value.to_i].pack('N')
+    end
+
+    def unserialize_value(value)
+      value.unpack('N').first
     end
   end
 end

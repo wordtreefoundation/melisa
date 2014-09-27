@@ -18,4 +18,9 @@ describe Melisa::BytesTrie do
   it "retreives many values by prefix" do
     expect(trie.get_all('one')).to match_array ['1', '3']
   end
+
+  it "#each iterates alphabetically and yields key/value pairs" do
+    expect { |b| trie.each(&b) }.to \
+      yield_successive_args(['onetwo', '3'], ['one', '1'], ['two', '2'])
+  end
 end

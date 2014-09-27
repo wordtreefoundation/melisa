@@ -30,15 +30,17 @@ module Melisa
       @agent ||= Marisa::Agent.new
     end
 
+    def built?
+      @built
+    end
+
     def build
       @trie.build(@keyset, config_flags(@options))
+      @built = true
     end
 
     def build_if_necessary
-      unless @built
-        build
-        @built = true
-      end
+      build unless built?
     end
 
     # Note: weight is not the same thing as a value! use a BytesTrie
@@ -69,7 +71,7 @@ module Melisa
       agent.key_str
     end
 
-    def search(prefix)
+    def search(prefix='')
       build_if_necessary
       Search.new(self, prefix)
     end
@@ -80,8 +82,11 @@ module Melisa
     end
 
     def size
-      build_if_necessary
-      @trie.num_keys()
+      if @built
+        @trie.num_keys()
+      else
+        @keyset.num_keys()
+      end
     end
 
     def keys
