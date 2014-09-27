@@ -1,0 +1,17 @@
+#!/usr/bin/env ruby
+require 'open3'
+
+BIN_PATH = File.join(File.dirname(__FILE__), '..', 'ext', 'pkg', 'bin')
+
+available_commands = %w(lookup reverse-lookup predictive-search benchmark build common-prefix-search dump)
+
+if ARGV.size > 0 && available_commands.include?(ARGV.first.downcase)
+  marisa_command = File.join(BIN_PATH, "marisa-#{ARGV[0]}")
+
+  exec(marisa_command, *ARGV[1..-1])
+else
+  $stderr.puts "USAGE: marisa COMMAND [options]"
+  $stderr.puts "Commands: #{available_commands}"
+  $stderr.puts "See http://marisa-trie.googlecode.com/svn/trunk/docs/readme.en.html"
+  exit -1
+end
