@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    melisa (0.2.0)
+    melisa (0.2.2)
 
 GEM
   remote: https://rubygems.org/
