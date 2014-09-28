@@ -8,7 +8,7 @@ module Melisa
       @sep = separator
       @sep_c = separator.force_encoding('binary').ord
 
-      add_many(hash, [])
+      add_many(hash)
     end
 
     def add_many(hash, weight=nil)

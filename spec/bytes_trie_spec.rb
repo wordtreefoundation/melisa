@@ -5,9 +5,9 @@ describe Melisa::BytesTrie do
   let(:trie) { Melisa::BytesTrie.new(hash) }
 
   it "stores values" do
-    trie['one'].should == '1'
-    trie['two'].should == '2'
-    trie['onetwo'].should == '3'
+    expect(trie['one']).to eq '1'
+    expect(trie['two']).to eq '2'
+    expect(trie['onetwo']).to eq '3'
   end
 
   it "sets and gets values" do

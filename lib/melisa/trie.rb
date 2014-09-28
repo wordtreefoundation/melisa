@@ -52,6 +52,7 @@ module Melisa
     alias :<< :add
 
     def add_many(keys, weights)
+      raise ImmutableError, "Can't add keys, Trie already built" if @built
       for key, weight in keys.zip(weights)
         push(key, weight)
       end
@@ -62,6 +63,13 @@ module Melisa
       agent.set_query(key)
       trie.lookup(agent)
       agent.key_id if agent.key_str
+    end
+
+    def get_weight(key)
+      build_if_necessary
+      agent.set_query(key)
+      trie.lookup(agent)
+      agent.key.weight if agent.key_str
     end
 
     def get_key(id)
@@ -118,7 +126,7 @@ module Melisa
 
     def push(key, weight=nil)
       if weight
-        @keyset.push_back(key) #, weight) # For now, ignore weight due to marisa C++ binding issue
+        @keyset.push_back(key, weight)
       else
         @keyset.push_back(key)
       end
