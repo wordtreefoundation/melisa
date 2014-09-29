@@ -17,9 +17,8 @@ if `which make`.strip.empty?
   exit(1)
 end
 
-MELISA_ROOT = File.expand_path(File.join(File.dirname(__FILE__), '..'))
 MARISA_ROOT = File.expand_path(File.join(File.dirname(__FILE__), "marisa-0.2.4"))
-PREFIX = File.join(MELISA_ROOT, 'ext', 'pkg')
+PREFIX = File.join(MARISA_ROOT, 'pkg')
 
 FileUtils.cd(MARISA_ROOT) do
   sys "./configure --enable-sse3 --prefix='#{PREFIX}'"
