@@ -20,8 +20,11 @@ end
 MARISA_ROOT = File.expand_path(File.join(File.dirname(__FILE__), "marisa-0.2.4"))
 PREFIX = File.expand_path(File.join(File.dirname(__FILE__), "pkg"))
 
+# Magic incantation that lets the linker see the installed marisa lib
+$LDFLAGS << " -Wl,-rpath,#{File.join(PREFIX, "lib")}"
+
 FileUtils.cd(MARISA_ROOT) do
-  sys "./configure --enable-sse3 --disable-shared --prefix='#{PREFIX}'"
+  sys "./configure --enable-sse3 --prefix='#{PREFIX}'"
   sys "make install"
 end
 
