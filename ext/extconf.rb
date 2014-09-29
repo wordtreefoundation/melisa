@@ -18,12 +18,11 @@ if `which make`.strip.empty?
 end
 
 MARISA_ROOT = File.expand_path(File.join(File.dirname(__FILE__), "marisa-0.2.4"))
-PREFIX = File.join(MARISA_ROOT, 'pkg')
+PREFIX = File.expand_path(File.join(File.dirname(__FILE__), "pkg"))
 
 FileUtils.cd(MARISA_ROOT) do
   sys "./configure --enable-sse3 --prefix='#{PREFIX}'"
   sys "make install"
-  sys "make distclean"
 end
 
 $CFLAGS   << " -I#{File.join(PREFIX, 'include')}"

@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 require 'open3'
 
-BIN_PATH = File.join(File.dirname(__FILE__), '..', 'ext', 'marisa-0.2.4', 'pkg', 'bin')
+BIN_PATH = File.join(File.dirname(__FILE__), '..', 'ext', 'pkg', 'bin')
 
 available_commands = %w(lookup reverse-lookup predictive-search benchmark build common-prefix-search dump)
 
