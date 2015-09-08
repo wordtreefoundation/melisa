@@ -74,7 +74,7 @@ module Melisa
     end
 
     def agent_key_value(agent)
-      unserialize_value(agent.key_str.split(@sep).last)
+      unserialize_value(agent.key_str.split(@sep, 2).last)
     end
   end
 end

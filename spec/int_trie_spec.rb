@@ -15,6 +15,11 @@ describe Melisa::IntTrie do
     expect(trie['five']).to eq 5
   end
 
+  it "sets and gets values when binary-encoded value has \\xFF" do
+    trie['with_ff'] = 15359
+    expect(trie['with_ff']).to eq 15359
+  end
+
   it "retreives many values by prefix" do
     trie.get_all('one').should =~ [1, 3]
   end
