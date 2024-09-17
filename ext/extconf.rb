@@ -67,5 +67,7 @@ $CFLAGS   << " -I#{File.join(PREFIX, 'include')}"
 $CXXFLAGS << " -I#{File.join(PREFIX, 'include')}"
 $LDFLAGS  << " -L#{File.join(PREFIX, 'lib')} -lmarisa"
 
+have_library("marisa")
+
 # Create makefile for marisa
 create_makefile("marisa")
