@@ -1,4 +1,4 @@
-Melisa is a Ruby gem that wraps the very efficient [Marisa Trie C++ library](https://pypi.python.org/pypi/marisa-trie/). See also Marisa Trie's [README](http://marisa-trie.googlecode.com/svn/trunk/docs/readme.en.html).
+Melisa is a Ruby gem that wraps the very efficient [Marisa Trie C++ library](https://github.com/s-yata/marisa-trie). See also Marisa Trie's [README](https://www.s-yata.jp/marisa-trie/docs/readme.en.html).
 
 A "trie" is a useful data structure for storing strings, especially ngrams.
 
@@ -58,3 +58,9 @@ About
 -----
 (c) 2014 Duane Johnson
 License: MIT
+
+## Development
+
+After checking out the repo, run bin/setup to install dependencies. Then, run rake spec to run the tests. You can also run bin/console for an interactive prompt that will allow you to experiment.
+
+To install this gem onto your local machine, run bundle exec rake install. To release a new version, update the version number in version.rb, and then run bundle exec rake release, which will create a git tag for the version, push git commits and the created tag, and push the .gem file to rubygems.org.
