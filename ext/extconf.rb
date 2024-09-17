@@ -52,8 +52,13 @@ PREFIX = File.expand_path(File.join(File.dirname(__FILE__), "pkg"))
 # Ensure linker sees the installed marisa lib
 $LDFLAGS << " -Wl,-rpath,#{File.join(PREFIX, "lib")}"
 
+$CFLAGS   << " -I#{File.join(PREFIX, 'include')}"
+$CXXFLAGS << " -I#{File.join(PREFIX, 'include')}"
+$LDFLAGS  << " -L#{File.join(PREFIX, 'lib')}"
+
 # Build Marisa Trie from source
 FileUtils.cd(MARISA_ROOT) do
+  sys "make clean"
   sys "autoreconf -i"
   sys "./configure --enable-native-code --prefix='#{PREFIX}'"
   sys "make"
