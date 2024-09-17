@@ -1,4 +1,4 @@
-Melisa is a Ruby gem that wraps the very efficient [Marisa Trie C++ library](https://pypi.python.org/pypi/marisa-trie/). See also Marisa Trie's [README](http://marisa-trie.googlecode.com/svn/trunk/docs/readme.en.html).
+Melisa is a Ruby gem that wraps the very efficient [Marisa Trie C++ library](https://github.com/s-yata/marisa-trie). See also Marisa Trie's [README](https://www.s-yata.jp/marisa-trie/docs/readme.en.html).
 
 A "trie" is a useful data structure for storing strings, especially ngrams.
 

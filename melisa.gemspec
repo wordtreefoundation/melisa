@@ -32,7 +32,7 @@ Gem::Specification.new do |gem|
   gem.version = Melisa::VERSION
   gem.required_ruby_version = '>= 1.9.0'
 
-  gem.add_development_dependency "rake", "~> 10.3"
-  gem.add_development_dependency "bundler", "~> 1.7"
+  gem.add_development_dependency "rake", "~> 13.0"
+  gem.add_development_dependency "bundler", "~> 2.0"
   gem.add_development_dependency "rspec", "~> 3.1"
 end

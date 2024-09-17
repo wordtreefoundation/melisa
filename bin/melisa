@@ -12,6 +12,6 @@ if ARGV.size > 0 && available_commands.include?(ARGV.first.downcase)
 else
   $stderr.puts "USAGE: melisa COMMAND [options]"
   $stderr.puts "Commands: #{available_commands}"
-  $stderr.puts "See http://marisa-trie.googlecode.com/svn/trunk/docs/readme.en.html"
+  $stderr.puts "See https://github.com/s-yata/marisa-trie"
   exit -1
 end
