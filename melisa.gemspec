@@ -33,6 +33,5 @@ Gem::Specification.new do |gem|
   gem.required_ruby_version = '>= 1.9.0'
 
   gem.add_development_dependency "rake", "~> 13.0"
-  gem.add_development_dependency "bundler", "~> 2.0"
   gem.add_development_dependency "rspec", "~> 3.1"
 end
