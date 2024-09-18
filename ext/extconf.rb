@@ -49,18 +49,22 @@ check_command_exists("g++")
 MARISA_ROOT = File.expand_path(File.join(File.dirname(__FILE__), "marisa-trie-0.2.6"))
 PREFIX = File.expand_path(File.join(File.dirname(__FILE__), "pkg"))
 
-# Ensure linker sees the installed marisa lib
-$LDFLAGS << " -Wl,-rpath,#{File.join(PREFIX, "lib")}"
+include_path = File.join(PREFIX, 'include')
+lib_path = File.join(PREFIX, 'lib')
 
-$CFLAGS   << " -I#{File.join(PREFIX, 'include')}"
-$CXXFLAGS << " -I#{File.join(PREFIX, 'include')}"
-$LDFLAGS  << " -L#{File.join(PREFIX, 'lib')}"
+# Ensure linker sees the installed marisa lib
+$LDFLAGS << " -Wl,-rpath,#{lib_path} -L#{lib_path}"
+
+flags = " -I#{include_path}"
+$CFLAGS   << flags
+$CXXFLAGS << flags
+$CPPFLAGS << flags
 
 # Build Marisa Trie from source
 FileUtils.cd(MARISA_ROOT) do
-  sys "make clean"
   sys "autoreconf -i"
   sys "./configure --enable-native-code --prefix='#{PREFIX}'"
+  sys "make clean"
   sys "make"
   sys "make install"
 end
@@ -68,9 +72,8 @@ end
 # Update flags to avoid potential security issues
 $CFLAGS.sub!('-Werror=format-security', '')
 $CXXFLAGS.sub!('-Werror=format-security', '')
-$CFLAGS   << " -I#{File.join(PREFIX, 'include')}"
-$CXXFLAGS << " -I#{File.join(PREFIX, 'include')}"
-$LDFLAGS  << " -L#{File.join(PREFIX, 'lib')} -lmarisa"
+
+$LDFLAGS << " -lmarisa"
 
 have_library("marisa")
 
