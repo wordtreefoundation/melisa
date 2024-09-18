@@ -64,6 +64,7 @@ $CPPFLAGS << flags
 FileUtils.cd(MARISA_ROOT) do
   sys "autoreconf -i"
   sys "./configure --enable-native-code --prefix='#{PREFIX}'"
+  sys "make clean"
   sys "make"
   sys "make install"
 end
