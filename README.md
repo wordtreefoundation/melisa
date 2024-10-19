@@ -2,6 +2,13 @@ Melisa is a Ruby gem that wraps the very efficient [Marisa Trie C++ library](htt
 
 A "trie" is a useful data structure for storing strings, especially ngrams.
 
+Installation
+------------
+
+```
+sudo apt-get install make dh-autoreconf build-essential
+```
+
 Example
 -------
 
